@@ -13,7 +13,8 @@ let artikli = []
 function createArtikalRows()
 {
     let table = document.querySelector("#artikli-body")
-
+    table.innerHTML = "";
+    
     for(let i = 0; i < artikli.length; i++)
     {
         let tr = document.createElement("tr")
@@ -59,16 +60,17 @@ function initializeArtikals()
         new Artikal("Rosa", 20, "Voda za pice 1l")
     ]
     createArtikalRows()
+    handleFormSubmission()
 }
 document.addEventListener('DOMContentLoaded', initializeArtikals)
 
-function handleSubmission()
+function handleFormSubmission()
 {
     let submitBtn = document.querySelector('#submitBtn')
     submitBtn.addEventListener('click', function()
     {
-        const forma = document.querySelector("forma")
-        const formData = newFormData(forma)
+        const forma = document.querySelector("#forma")
+        const formData = new FormData(forma)
         const naziv = formData.get("naziv")
         const cena = formData.get("cena")
         const opis = formData.get("opis")
