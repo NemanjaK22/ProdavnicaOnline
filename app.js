@@ -54,11 +54,16 @@ function displayArtikalDetails(artikal)
 
 function initializeArtikals()
 {
-    artikli = [
-        new Artikal("Fudzi jabuka", 40, "Socne crvene jabuke, cena po kilogramu"),
-        new Artikal("Milka Cokolada", 50, "Mlecna cokolada milka 200 g"),
-        new Artikal("Rosa", 20, "Voda za pice 1l")
-    ]
+    loadArtikliFromStorage();
+    if(artikli.length === 0)
+    {
+        artikli = [
+            new Artikal("Fudzi jabuka", 40, "Socne crvene jabuke, cena po kilogramu"),
+            new Artikal("Milka Cokolada", 50, "Mlecna cokolada milka 200 g"),
+            new Artikal("Rosa", 20, "Voda za pice 1l")
+        ]
+        saveArtikliToStorage();
+    }
     createArtikalRows()
     handleFormSubmission()
 }
@@ -77,8 +82,19 @@ function handleFormSubmission()
 
         const noviArtikal = new Artikal(naziv,cena,opis)
         artikli.push(noviArtikal)
-
+        saveArtikliToStorage()
         createArtikalRows()
     })
 }
-
+function saveArtikliToStorage()
+{
+    localStorage.setItem("artikli",JSON.stringify(artikli))
+}
+function loadArtikliFromStorage()
+{
+    const data = localStorage.getItem("artikli")
+    if(data)
+    {
+        artikli = JSON.parse(data);
+    }
+}
